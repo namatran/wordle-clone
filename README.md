@@ -1,4 +1,4 @@
-# wordle-clone
+# Wordle-Clone
 
 React App Copy of Wordle with 6 guesses and only one correct word.
 
