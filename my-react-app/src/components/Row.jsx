@@ -2,28 +2,39 @@ import React from "react";
 import Tile from './Tile';
 
 const getLetterColor = (letter, index, guess, answer) => {
-  // Green first - exact matches
+  // First pass: check if it's green (exact match)
   if (letter === answer[index]) {
     return "green"
   }
   
-  // Count how many of this letter are in the answer
-  const letterCount = answer.split("").filter(l => l === letter).length
+  // Count how many of this letter are in answer
+  const answerLetters = answer.split("")
+  const guessLetters = guess.split("")
   
-  // Count how many greens and yellows of this letter appear BEFORE this index
-  let usedCount = 0
-  for (let i = 0; i < index; i++) {
-    if (guess[i] === letter) {
-      if (answer[i] === letter) {
-        usedCount++ // green
-      } else if (answer.includes(letter)) {
-        usedCount++ // yellow
-      }
+  // Mark all greens first
+  const greenIndices = []
+  for (let i = 0; i < 5; i++) {
+    if (guessLetters[i] === answerLetters[i]) {
+      greenIndices.push(i)
     }
   }
   
-  // If we haven't used up all instances and letter exists in answer
-  if (answer.includes(letter) && usedCount < letterCount) {
+  // Count available instances (total in answer - greens already used)
+  let availableCount = answerLetters.filter(l => l === letter).length
+  greenIndices.forEach(i => {
+    if (guessLetters[i] === letter) availableCount--
+  })
+  
+  // Count yellows before this index
+  let yellowsUsed = 0
+  for (let i = 0; i < index; i++) {
+    if (guessLetters[i] === letter && !greenIndices.includes(i)) {
+      yellowsUsed++
+    }
+  }
+  
+  // Yellow if letter exists and we haven't used all available
+  if (answer.includes(letter) && yellowsUsed < availableCount) {
     return "yellow"
   }
   
