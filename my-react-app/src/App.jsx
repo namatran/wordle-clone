@@ -7,7 +7,7 @@ const App = () => {
   const [ inputValue, setInputValue ] = useState(""); // Current guess being typed
   const [ guesses, setGuesses ] = useState([])        // all submitted guesses
 
-  const answer = "NAMUS";
+  const answer = "STATE";
   const maxGuesses = 6;
   const limit = 5;
   const gameWon = guesses.includes(answer);
