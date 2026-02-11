@@ -37,7 +37,7 @@ const App = () => {
       {gameWon
         ? <p>You won! 🎉</p>
         : gameOver 
-          ? <p>Game over! The word was: {answer}</p>
+          ? <p>Game over!</p>
           : <>
               <input 
                 value={inputValue}
